@@ -1,0 +1,38 @@
+.parent {
+    position: relative;
+    overflow: hidden;
+    height: 90px;
+  }
+  
+  .parent .right {
+    position: absolute;
+    bottom: 0;
+    right: -108px;
+  }
+  @media (min-width: 992px) {
+    .right {
+      right: -180px !important;
+      text-align: end !important;
+    }
+  }
+  @media (min-width: 0px) {
+    .parent {
+      background: linear-gradient(
+        90deg,
+        rgba(200, 56, 214, 1) 0%,
+        rgba(58, 20, 147, 1) 51%
+      );
+    }
+    .right {
+      font-size: 15px;
+    }
+  }
+  @media (min-width: 653px) {
+    .parent {
+      background: transparent;
+      height: 100%;
+    }
+    .right {
+      font-size: 16px;
+    }
+  }

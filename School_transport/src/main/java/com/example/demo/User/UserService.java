@@ -1,67 +1,64 @@
 package com.example.demo.User;
 
-import com.example.demo.Role.Role;
-import com.example.demo.Role.RoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import static java.lang.Long.parseLong;
 
 @Service
-public class UserService implements UserDetailsService {
-
+public class UserService implements UserDetailsService{
     private final UserRepo userRepo;
-    private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepo userRepo, RoleRepo roleRepo, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(email);
-        if(user  == null){
-            throw new UsernameNotFoundException("User not found in the database");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user= userRepo.findByUsername(username);
+        if(user == null){
+            throw new UsernameNotFoundException("User not exist");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorities);
     }
 
-    public User register(Form form){
-        User user = form.getUser();
-        Long role_id = form.getRole_id();
-        Role role = roleRepo.findById(role_id).orElse(null);
+    public List<User> getUsers(){
+        return userRepo.findAll();
+    }
 
-        user.getRoles().add(role);
+    public User createUser(User user){
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+//        passwordEncoder.
         return userRepo.save(user);
     }
 
-    public User getUser(String id) {
-        Long user_id = Long.parseLong(id);
-        return userRepo.findById(user_id).orElse(null);
+    public void updateUser(String id){
+        long longId = parseLong(id);
+        User user = userRepo.findById(longId).orElse(null);
+        userRepo.save(user);
     }
-    public User login(User data){
 
-        User user = userRepo.findByEmail(data.getEmail());
-
-        if (user.getPassword().equals(data.getPassword())){
-            return user;
-        }
+    public User getUserName(String username) {
+        User user= userRepo.findByUsername(username);
+//         if()
         return null;
     }
 }

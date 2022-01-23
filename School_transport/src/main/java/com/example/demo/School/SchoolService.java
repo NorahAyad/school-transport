@@ -2,6 +2,7 @@ package com.example.demo.School;
 
 import com.example.demo.User.User;
 import com.example.demo.User.UserRepo;
+import com.example.demo.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,20 @@ public class SchoolService {
         return schoolRepo.findAll();
     }
 
+
+    public School updateSchool(String id, School data) {
+        Long student_id = Long.parseLong(id);
+        School school= schoolRepo.findById(student_id).orElse(null);
+        if(school != null){
+            school.setName(data.getName());
+//            school.getUser().setPassword(data.getUser().getPassword());
+            school.setLongitude(data.getLongitude());
+            school.setLatitude( data.getLatitude());
+
+            schoolRepo.save(school);
+        }
+
+        return school;
+    }
 
 }

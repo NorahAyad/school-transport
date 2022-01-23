@@ -1,32 +1,26 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Admin from "./components/Admin";
-import Driver from "./components/AdminDriver";
-import Student from "./components/Student";
-import LocationAllStudent from './components/LocationAllStudent'
-import AdminDriver from './components/AdminDriver'
-import Register from "./components/Register";
+import LocationAllStudent from "./components/LocationAllStudent";
 import Login from "./components/Login";
+import HomeAdmin from "./components/PageSchool/HomeAdmin";
+import PageDriver from "./components/PageDriver/PageDriver";
+import HomeApp from "./PageHome/HomeApp";
+
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-
-
-
-
-
-
-      <Route exact path="/Admin" element={<Admin />} />
-      <Route exact path="/driver" element={<Driver />} />
-      <Route exact path="/student" element={<Student />} />
-      <Route exact path="/locationAllStudent" element={<LocationAllStudent />} />
-      <Route exact path="/adminDriver" element={<AdminDriver />} />
-    
-      <Route exact path="/register" element={<Register />} />
+      <Routes>
+        <Route exact path="/" element={<HomeApp />} />
+        <Route
+          exact
+          path="/locationAllStudent"
+          element={<LocationAllStudent />}
+        />
+        <Route exact path="/home" element={<HomeAdmin />} />
         <Route exact path="/login" element={<Login />} />
-    </Routes>
-  </BrowserRouter>
+        <Route exact path="/driver/:id" element={<PageDriver />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

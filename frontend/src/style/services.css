@@ -1,0 +1,45 @@
+.cards {
+    background-color: #bcbcbc42;
+    padding: 10px;
+    line-height: 25px;
+    border-radius: 15px;
+  }
+  .mt-5 {
+    margin-top: 14rem!important;
+}
+.text-center {
+    text-align: center!important;
+    padding-bottom: 38px;
+   
+}
+hr:not([size]) {
+    height: 5px;
+    width: 77px;
+    margin-left: 510px;
+}
+hr.hrAbout {
+ 
+  width: 66px;
+  margin-left: 529px;
+}
+
+  .z-index3 {
+    z-index: 100;
+  }
+  @media (min-width: 0px) {
+    .cards {
+      width: 90%;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .cards {
+      width: calc(100% / 2.2);
+    }
+  }
+  @media (min-width: 992px) {
+    .cards {
+      width: calc(100% / 4.3);
+    }
+  }
+  

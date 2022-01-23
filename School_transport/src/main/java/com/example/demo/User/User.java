@@ -1,13 +1,7 @@
 package com.example.demo.User;
 
-import com.example.demo.Role.Role;
-import com.example.demo.School.School;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,25 +9,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
-    private String email;
-    private  String password;
+    @Column(unique=true)
+    private String username;
+    private String password;
+    private String role;
 
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles = new ArrayList<>();
-//
-//    @JsonBackReference
-//    @OneToOne(fetch = FetchType.EAGER)
-//    private School school;
     public User() {
     }
 
-    public User(Long id, String email, String password, List<Role> roles) {
-        this.id = id;
-        this.email = email;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
-        this.roles = roles;
+    }
+
+    public User(Long id, String username, String password, String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -44,12 +37,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -60,11 +53,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

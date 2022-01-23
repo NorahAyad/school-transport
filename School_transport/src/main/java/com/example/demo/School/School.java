@@ -1,9 +1,9 @@
 package com.example.demo.School;
 
-import com.example.demo.Drive.Drive;
+import com.example.demo.Driver.Driver;
 import com.example.demo.User.User;
 import com.example.demo.student.Student;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,26 +15,29 @@ public class School {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private float latitude;
     private float longitude;
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
-        private List<Drive> drive = new ArrayList<>();
+        private List<Driver> drive = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "school")
     private List<Student> student = new ArrayList<>();
 
-//    @JsonManagedReference
-//    cascade = CascadeType.ALL ,optional = true
-    @OneToOne(fetch = FetchType.EAGER)
+
+    @OneToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name ="user_id")
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private User user;
     public School() {
 
     }
 
-    public School(long id, float latitude, float longitude, List<Drive> drive, List<Student> student, User user) {
+    public School(long id, String name, float latitude, float longitude, List<Driver> drive, List<Student> student, User user) {
         this.id = id;
+        this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.drive = drive;
@@ -48,6 +51,14 @@ public class School {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public float getLatitude() {
@@ -66,11 +77,11 @@ public class School {
         this.longitude = longitude;
     }
 
-    public List<Drive> getDrive() {
+    public List<Driver> getDrive() {
         return drive;
     }
 
-    public void setDrive(List<Drive> drive) {
+    public void setDrive(List<Driver> drive) {
         this.drive = drive;
     }
 

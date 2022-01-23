@@ -1,6 +1,9 @@
 package com.example.demo.User;
 
+import com.example.demo.student.Student;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "users")
@@ -13,32 +16,23 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public List<User> getUsers(){
+        return userService.getUsers();
+    }
+
+    @GetMapping("/{username}")
+    public User getUserName(@PathVariable String username){
+        return userService.getUserName(username);
+    }
     @PostMapping
-    public User register(@RequestBody Form form){
-
-        return userService.register(form);
+    public User createUser(@RequestBody User user){
+        return userService.createUser(user);
     }
 
-    @GetMapping("/{id}")
-    public User getuser(@PathVariable String id){
-        return userService.getUser(id);
-    }
-    
-    @PostMapping("/login")
-    public User login(@RequestBody User user){
-        return userService.login(user);
+    @PutMapping("/{id}")
+    public void updateUser(@PathVariable String id){
+        userService.updateUser(id);
     }
 }
 
-class Form {
-    private User user;
-    private Long role_id;
-
-    public User getUser() {
-        return user;
-    }
-
-    public Long getRole_id() {
-        return role_id;
-    }
-}
