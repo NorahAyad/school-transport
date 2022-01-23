@@ -40,6 +40,7 @@ function Login() {
         const token = res.data.access_token;
         const decoded = jwt_decode(token);
         console.log(decoded);
+        console.log(decoded.roles+"nnnn");
         // add to redux
         const user_action = addUser({
           id: decoded.id,
@@ -48,12 +49,18 @@ function Login() {
         const token_action = addToken(token);
         dispatch(user_action);
         dispatch(token_action);
+    
 
-        if (decoded.roles === "school") {
+        if (decoded.roles == "school") {
+          console.log("here");
           navigate("/home");
-        } else if (decoded.roles === "driver") {
+        } 
+        else if (decoded.roles == "driver") {
+          console.log("here2");
           navigate(`/driver/${decoded.sub}`);
-        } else {
+        } 
+        else {
+          console.log("here3");
           navigate(`/student/${decoded.sub}`);
         }
       })

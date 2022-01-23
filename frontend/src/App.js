@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import HomeAdmin from "./components/PageSchool/HomeAdmin";
 import PageDriver from "./components/PageDriver/PageDriver";
 import HomeApp from "./PageHome/HomeApp";
-
+import Student from "./components/PageStudent/PageStudent";
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +19,7 @@ function App() {
         <Route exact path="/home" element={<HomeAdmin />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/driver/:id" element={<PageDriver />} />
+        <Route exact path="/student/:id" element={<Student />} />
       </Routes>
     </BrowserRouter>
   );
